@@ -1,38 +1,52 @@
 <template>
   <v-app>
-    <v-toolbar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        flat
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
+    <v-navigation-drawer
+      persistent
+      :clipped="clipped"
+      v-model="drawer"
+      enable-resize-watcher
+      fixed
+      app
+    >
+    <v-list>
+      <v-list-tile>
+        <v-list-tile-title>Tile 1</v-list-tile-title>
+      </v-list-tile>
+      <v-list-tile>
+        <v-list-tile-title>Tile 2</v-list-tile-title>
+      </v-list-tile>
+      <v-list-tile>
+        <v-list-tile-title>Tile 3</v-list-tile-title>
+      </v-list-tile>
+    </v-list>
+    </v-navigation-drawer>
+    <v-toolbar app color="primary">
+      <v-toolbar-side-icon @click.stop="drawer = !drawer" class="toolbar-items"></v-toolbar-side-icon>
+      <v-toolbar-title class="toolbar-items">Games</v-toolbar-title>
     </v-toolbar>
-
-    <v-content>
-      <HelloWorld/>
-    </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
   },
   data () {
     return {
-      //
+      clipped: false,
+      drawer: true,
+      fixed: false,
     }
   }
 }
 </script>
+
+<style scoped>
+.toolbar-items{
+  color: white;
+}
+</style>
+
