@@ -5,7 +5,9 @@
         <v-card-title>{{ user.name.first }}</v-card-title>
         <v-card-text>{{user.gender}}</v-card-text>
         <v-card-actions>
-            <v-btn>Download profile!</v-btn>
+            <v-layout justify-center>
+                <v-btn color="primary">Download profile!</v-btn>
+            </v-layout>
         </v-card-actions>
     </v-card>
 </div>
