@@ -28,7 +28,9 @@
               <router-link class="button" :to="{ name: 'Login' }">
                 <v-btn right flat color="white">Login</v-btn>
               </router-link>
+              <router-link class="button" :to="{ name: 'Register' }">
                 <v-btn  right flat color="white">Register</v-btn>
+              </router-link>
             </v-toolbar-items>
         </v-toolbar>
     </div>

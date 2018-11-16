@@ -1,10 +1,12 @@
 <template>
 <div class="content">
     <v-card class="card" flat hover v-for="(user, index) in users" :key="index">
-        <img v-bind:src="user.picture.medium"/>
+        <img class="img-user" v-bind:src="user.picture.large"/>
         <v-card-title>{{ user.name.first }}</v-card-title>
         <v-card-text>{{user.gender}}</v-card-text>
-        <v-card-actions></v-card-actions>
+        <v-card-actions>
+            <v-btn>Download profile!</v-btn>
+        </v-card-actions>
     </v-card>
 </div>
 </template>
@@ -17,13 +19,17 @@ export default {
     data(){
         return {
             users: [],
+            data: false,
         };
     },
     async created(){
-    axios.get("https://randomuser.me/api/?results=10", {
+    axios.get("https://randomuser.me/api/?results=100", {
     })
     .then(response => {
         this.users = response.data.results;
+        this.data = true;
+        this.$emit('person-card:change', this.data);
+        
     })
   .catch(e => {
     console.log("error", e);
@@ -33,6 +39,9 @@ export default {
 </script>
 
 <style scoped>
+.img-user{
+    width: 100%;
+}
 .content{
     display: grid;
     grid-template-columns: 300px 300px 300px;
