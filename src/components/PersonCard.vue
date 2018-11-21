@@ -2,11 +2,13 @@
 <div class="content">
     <v-card class="card" flat hover v-for="(user, index) in users" :key="index">
         <img class="img-user" v-bind:src="user.picture.large"/>
-        <v-card-title>{{ user.name.first }}</v-card-title>
-        <v-card-text>{{user.gender}}</v-card-text>
+        <v-card-title class="title">{{ user.name.first.substring(0,1).toUpperCase() 
+                                    + user.name.first.substring(1) }}</v-card-title>
+        <v-card-text>{{ user.email }}</v-card-text>
+        <v-card-text>{{ user.gender }}</v-card-text>
         <v-card-actions>
             <v-layout justify-center>
-                <v-btn color="primary">Download profile!</v-btn>
+                <v-btn class="button-download" color="primary">Download profile!</v-btn>
             </v-layout>
         </v-card-actions>
     </v-card>
@@ -41,12 +43,16 @@ export default {
 </script>
 
 <style scoped>
+.button-download{
+    width: 100%;
+    overflow: hidden;
+}
 .img-user{
     width: 100%;
 }
 .content{
     display: grid;
-    grid-template-columns: 300px 300px 300px;
+    grid-template-columns: 22% 22% 22% 22%;
     justify-content: center;
     position: relative;
     top: 50px;
@@ -54,6 +60,10 @@ export default {
 }
 .card{
     margin: 32px;
+}
+
+.title{
+    font-size: 16px;
 }
 </style>
 

@@ -8,10 +8,10 @@
                     <v-toolbar-title>Login</v-toolbar-title>
                 </v-toolbar>
                 <v-spacer></v-spacer>
-                <v-text-field class="text-field" prepend-icon="person"></v-text-field>
-                <v-text-field class="text-field" prepend-icon="lock"></v-text-field>
+                <v-text-field class="text-field" prepend-icon="person" label="email" v-model="email"></v-text-field>
+                <v-text-field class="text-field" type="password" prepend-icon="lock" label="password" v-model="password"></v-text-field>
                 <v-layout class="container-button" justify-center>
-                    <v-btn color="primary" class="button">Login</v-btn>
+                    <v-btn color="primary" class="button" @click="signIn">Login</v-btn>
                 </v-layout>
             </v-card>
             </v-layout>
@@ -21,11 +21,31 @@
 </template>
 
 <script>
+import firebase from 'firebase';
+import database from '@/services/database';
 
 export default {
     name: 'LoginComponent',
+    data() {
+        return {
+            email: '',
+            password: '',
+        }
+    },
     components: {
     },
+    methods: {
+        async signIn () {
+            let result = await database.signIn(this.email, this.password);
+
+            if(result.message) {
+                this.error = result.message;
+            } else {
+                console.log('User is signed in');
+                this.$router.push('/');
+            }
+        }
+    }
 }
 </script>
 

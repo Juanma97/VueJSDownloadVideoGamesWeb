@@ -9,10 +9,10 @@
                 </v-toolbar>
                 <v-spacer></v-spacer>
                 <v-text-field class="text-field" prepend-inner-icon="person" clearable label="name"></v-text-field>
-                <v-text-field class="text-field" prepend-inner-icon="email" clearable label="email"></v-text-field>
-                <v-text-field class="text-field" prepend-inner-icon="lock" clearable label="password"></v-text-field>
+                <v-text-field class="text-field" prepend-inner-icon="email" clearable label="email" v-model="email"></v-text-field>
+                <v-text-field class="text-field" prepend-inner-icon="lock" clearable label="password" v-model="password"></v-text-field>
                 <v-layout class="container-button" justify-center>
-                    <v-btn color="primary" class="button">Register</v-btn>
+                    <v-btn color="primary" class="button" @click="signUp">Register</v-btn>
                 </v-layout>
             </v-card>
             </v-layout>
@@ -22,8 +22,29 @@
 </template>
 
 <script>
+import firebase from 'firebase';
+import database from '@/services/database';
+
 export default {
     name: 'RegisterComponent',
+    data() {
+        return {
+            email: '',
+            password: '',
+        }
+    },
+    methods: {
+        async signUp () {
+            let result = await database.signUp(this.email, this.password);
+
+            if(result.message) {
+                this.error = result.message;
+            } else {
+                console.log('User is created');
+                this.$router.push('/');
+            }
+        }
+    }
 }
 </script>
 
