@@ -10,7 +10,7 @@
                 <v-spacer></v-spacer>
                 <v-text-field class="text-field" prepend-inner-icon="person" clearable label="name" v-model="name"></v-text-field>
                 <v-text-field class="text-field" prepend-inner-icon="email" clearable label="email" v-model="email"></v-text-field>
-                <v-text-field class="text-field" prepend-inner-icon="lock" clearable label="password" v-model="password"></v-text-field>
+                <v-text-field class="text-field" type="password" prepend-inner-icon="lock" clearable label="password" v-model="password"></v-text-field>
                 <v-layout class="container-button" justify-center>
                     <v-btn color="primary" class="button" @click="signUp">Register</v-btn>
                 </v-layout>

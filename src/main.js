@@ -26,6 +26,8 @@ firebase.auth().onAuthStateChanged((user) => {
       snapshot.forEach(function(childSnapshot){
         if (childSnapshot.val().UID == user.uid) {
           store.commit('setCurrentName', childSnapshot.val().name);
+          store.commit('setCurrentLogins', childSnapshot.val().logins);
+          store.commit('setCurrentDownloadProfiles', childSnapshot.val().downloadProfiles);
         }
       });
     })

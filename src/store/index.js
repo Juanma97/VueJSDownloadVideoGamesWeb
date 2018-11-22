@@ -7,6 +7,9 @@ export default new Vuex.Store({
   state: {
     currentUser: null,
     name: '',
+    logins: 0,
+    downloadProfiles: 0,
+    profiles: [],
   },
   mutations: {
 
@@ -16,6 +19,15 @@ export default new Vuex.Store({
     },
     setCurrentName(state, payload) {
       state.name = payload;
+    },
+    setCurrentLogins(state, payload) {
+      state.logins = payload;
+    },
+    setCurrentDownloadProfiles(state, payload) {
+      state.downloadProfiles = payload;
+    },
+    setCurrentProfiles(state, payload) {
+      state.profiles = payload;
     },
   },
   actions: {
