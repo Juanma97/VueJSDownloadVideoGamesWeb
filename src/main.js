@@ -22,10 +22,8 @@ const initialize = () => {
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     store.commit('setCurrentUser', user);
-    console.log("Login")
   } else {
     store.commit('setCurrentUser', null);
-    console.log("no login")
   }
   initialize();
 });

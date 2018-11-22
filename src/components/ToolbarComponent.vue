@@ -8,7 +8,7 @@
       fixed
       app
     >
-    <v-toolbar-title id="title-nav-drawer">My profile</v-toolbar-title>
+    <v-toolbar-title id="title-nav-drawer">{{ this.$store.state.name }}</v-toolbar-title>
     <v-list>
       <v-list-tile>
         <v-list-tile-title>Tile 1</v-list-tile-title>
@@ -22,7 +22,7 @@
     </v-list>
     </v-navigation-drawer>
         <v-toolbar app color="primary">
-            <v-toolbar-side-icon v-if="login" @click.stop="drawer = !drawer" class="toolbar-items"></v-toolbar-side-icon>
+            <v-toolbar-side-icon v-if="currentUser" @click.stop="drawer = !drawer" class="toolbar-items"></v-toolbar-side-icon>
             <router-link :to="{ name: 'Home' }"><v-toolbar-title class="toolbar-items">Games</v-toolbar-title></router-link>
             <v-toolbar-items class="toolbar-items-buttons">
               <router-link class="button" :to="{ name: 'Login' }">
@@ -65,7 +65,7 @@ export default {
   computed: {
     currentUser() {
       return this.$store.state.currentUser;
-    }
+    },
   }
 }
 </script>
