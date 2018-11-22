@@ -14,9 +14,18 @@ const database = firebase.initializeApp(config);
 
 export default database;
 
-database.signUp = async (email, password) => {
+database.signUp = async (email, password, name) => {
   try {
     await firebase.auth().createUserWithEmailAndPassword(email, password);
+    const UID = firebase.auth().currentUser.uid;
+    firebase.auth().currentUser.displayName = name;
+    let ref = firebase.database().ref('Users').child(UID).set({
+      name: name,
+      logins: 0,
+      downloadProfiles: 0,
+      profilesDownload: 'none',
+      UID: UID,
+    });
     store.commit('setCurrentUser', firebase.auth().currentUser);
     return true;
   } catch (error) {

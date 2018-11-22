@@ -2,6 +2,12 @@
   <v-app>
     <ToolbarComponent/>
     <router-view/>
+    <v-footer class="pa-3" app dark fixed>
+      <v-spacer></v-spacer>
+      <div><a href="https://github.com/Juanma97">Github</a></div>
+      <v-spacer></v-spacer>
+      <div>&copy; {{ new Date().getFullYear() }}  Juanma Perez</div>
+    </v-footer>
   </v-app>
 </template>
 
@@ -25,7 +31,10 @@ export default {
 </script>
 
 <style scoped>
-
+a{
+  text-decoration: none;
+  color: white;
+}
 
 </style>
 

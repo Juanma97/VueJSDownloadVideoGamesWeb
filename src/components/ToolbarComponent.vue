@@ -11,26 +11,30 @@
     <v-toolbar-title id="title-nav-drawer">{{ this.$store.state.name }}</v-toolbar-title>
     <v-list>
       <v-list-tile>
-        <v-list-tile-title>Tile 1</v-list-tile-title>
+        <router-link class="tile" :to="{ name: 'Profile' }">
+          <v-list-tile-title>Mi perfil</v-list-tile-title>
+        </router-link>
       </v-list-tile>
       <v-list-tile>
-        <v-list-tile-title>Tile 2</v-list-tile-title>
+        <v-list-tile-title>Mis descargas</v-list-tile-title>
       </v-list-tile>
       <v-list-tile>
-        <v-list-tile-title>Tile 3</v-list-tile-title>
+        <v-list-tile-title>Acerca</v-list-tile-title>
       </v-list-tile>
     </v-list>
     </v-navigation-drawer>
         <v-toolbar app color="primary">
             <v-toolbar-side-icon v-if="currentUser" @click.stop="drawer = !drawer" class="toolbar-items"></v-toolbar-side-icon>
-            <router-link :to="{ name: 'Home' }"><v-toolbar-title class="toolbar-items">Games</v-toolbar-title></router-link>
-            <v-toolbar-items class="toolbar-items-buttons">
+            <router-link :to="{ name: 'Home' }"><v-toolbar-title class="toolbar-items">USearch</v-toolbar-title></router-link>
+            <v-toolbar-items v-if="!currentUser" class="toolbar-items-buttons">
               <router-link class="button" :to="{ name: 'Login' }">
                 <v-btn v-if="!currentUser" right flat color="white">Login</v-btn>
               </router-link>
               <router-link class="button" :to="{ name: 'Register' }">
                 <v-btn v-if="!currentUser" right flat color="white">Register</v-btn>
               </router-link>
+            </v-toolbar-items>
+            <v-toolbar-items v-if="currentUser" class="toolbar-items-buttons-logout">
               <router-link class="button" :to="{ name: 'Home' }">
                 <v-btn v-if="currentUser" right flat color="white" @click="signOut">Logout</v-btn>
               </router-link>
@@ -78,6 +82,12 @@ export default {
 .button{
   height: 100%;
 }
+.tile{
+  text-decoration: none;
+}
+.tile:hover{
+  cursor: pointer;
+}
 
 .grid{
   width: 100%;
@@ -91,6 +101,12 @@ export default {
   width: 100px;
   position: absolute;
   right: 200px;
+}
+
+.toolbar-items-buttons-logout{
+  width: 100px;
+  position: absolute;
+  right: 1%;
 }
 
 #title-nav-drawer{

@@ -13,10 +13,9 @@ export default new Vuex.Store({
     setCurrentUser(state, payload) {
     // eslint-disable-next-line
       state.currentUser = payload;
-      if (payload != null) {
-        // eslint-disable-next-line
-        state.name = payload.email;
-      }
+    },
+    setCurrentName(state, payload) {
+      state.name = payload;
     },
   },
   actions: {

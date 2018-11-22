@@ -21,6 +21,14 @@ const initialize = () => {
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
+    const ref = firebase.database().ref('Users');
+    ref.on('value', function(snapshot) {
+      snapshot.forEach(function(childSnapshot){
+        if (childSnapshot.val().UID == user.uid) {
+          store.commit('setCurrentName', childSnapshot.val().name);
+        }
+      });
+    })
     store.commit('setCurrentUser', user);
   } else {
     store.commit('setCurrentUser', null);

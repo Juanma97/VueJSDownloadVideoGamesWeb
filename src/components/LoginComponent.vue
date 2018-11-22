@@ -17,6 +17,7 @@
             </v-layout>
         </v-container>
         </v-content>
+        <v-progress-circular v-if="login" class="progress" size="64" indeterminate=true></v-progress-circular>
     </div>
 </template>
 
@@ -30,19 +31,23 @@ export default {
         return {
             email: '',
             password: '',
+            login: false,
         }
     },
     components: {
     },
     methods: {
         async signIn () {
+            this.login = true;
             let result = await database.signIn(this.email, this.password);
 
             if(result.message) {
                 this.error = result.message;
+                this.login = false
             } else {
                 console.log('User is signed in');
                 this.$router.push('/');
+                this.login = false;
             }
         }
     }
@@ -59,6 +64,11 @@ export default {
 }
 .button{
     width: 100%;
+}
+.progress{
+    position: absolute;
+    top: 33%;
+    left: 48%;
 }
 </style>
 

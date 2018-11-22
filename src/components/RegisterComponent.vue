@@ -8,7 +8,7 @@
                     <v-toolbar-title>Register</v-toolbar-title>
                 </v-toolbar>
                 <v-spacer></v-spacer>
-                <v-text-field class="text-field" prepend-inner-icon="person" clearable label="name"></v-text-field>
+                <v-text-field class="text-field" prepend-inner-icon="person" clearable label="name" v-model="name"></v-text-field>
                 <v-text-field class="text-field" prepend-inner-icon="email" clearable label="email" v-model="email"></v-text-field>
                 <v-text-field class="text-field" prepend-inner-icon="lock" clearable label="password" v-model="password"></v-text-field>
                 <v-layout class="container-button" justify-center>
@@ -18,6 +18,7 @@
             </v-layout>
         </v-container>
         </v-content>
+        <v-progress-circular v-if="register" class="progress" size="64" indeterminate=true></v-progress-circular>
     </div>
 </template>
 
@@ -31,17 +32,22 @@ export default {
         return {
             email: '',
             password: '',
+            name: '',
+            register: false,
         }
     },
     methods: {
         async signUp () {
-            let result = await database.signUp(this.email, this.password);
+            this.register = true;
+            let result = await database.signUp(this.email, this.password, this.name);
 
             if(result.message) {
                 this.error = result.message;
+                this.register = false;
             } else {
                 console.log('User is created');
                 this.$router.push('/');
+                this.register = false;
             }
         }
     }
@@ -57,6 +63,11 @@ export default {
 }
 .button{
     width: 100%;
+}
+.progress{
+    position: absolute;
+    top: 33%;
+    left: 48%;
 }
 </style>
 
