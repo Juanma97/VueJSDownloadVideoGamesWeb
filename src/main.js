@@ -18,7 +18,7 @@ const initialize = () => {
     }).$mount('#app');
   }
 };
-
+/* eslint-disable */
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     const ref = firebase.database().ref('Users');
@@ -28,6 +28,7 @@ firebase.auth().onAuthStateChanged((user) => {
           store.commit('setCurrentName', childSnapshot.val().name);
           store.commit('setCurrentLogins', childSnapshot.val().logins);
           store.commit('setCurrentDownloadProfiles', childSnapshot.val().downloadProfiles);
+          store.commit('setCurrentProfiles', childSnapshot.val().profilesDownload);
         }
       });
     })

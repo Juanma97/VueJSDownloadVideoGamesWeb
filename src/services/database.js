@@ -32,13 +32,13 @@ database.signUp = async (email, password, name) => {
     return error;
   }
 };
-
+/* eslint-disable */
 database.signIn = async (email, password) => {
   try {
     let login;
     await firebase.auth().signInWithEmailAndPassword(email, password);
-    const ref = firebase.database().ref('Users');
-    ref.on('value', function(snapshot) {
+    const refUsers = firebase.database().ref('Users');
+    refUsers.on('value', function(snapshot) {
       snapshot.forEach(function(childSnapshot){
         if (childSnapshot.val().UID == firebase.auth().currentUser.uid) {
           login = childSnapshot.val().logins + 1;
@@ -46,11 +46,10 @@ database.signIn = async (email, password) => {
           store.commit('setCurrentLogins', childSnapshot.val().logins);
           store.commit('setCurrentDownloadProfiles', childSnapshot.val().downloadProfiles);
           store.commit('setCurrentProfiles', childSnapshot.val().profilesDownload);
-          console.log("p", childSnapshot.val().profilesDownload)
         }
       });
     })
-    let refe = firebase.database().ref('Users').child(firebase.auth().currentUser.uid).update({
+    let refLoginsUpdate = firebase.database().ref('Users').child(firebase.auth().currentUser.uid).update({
       logins: login,
     });
     store.commit('setCurrentUser', firebase.auth().currentUser);

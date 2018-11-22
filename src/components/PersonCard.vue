@@ -42,8 +42,20 @@ export default {
     },
     methods: {
         downloadProfile(user) {
-            let ref = firebase.database().ref('Users').child(firebase.auth().currentUser.uid).child('profilesDownload').push();
-            ref.set({
+            let downloadProfiles;
+            const ref = firebase.database().ref('Users');
+            ref.on('value', function(snapshot) {
+            snapshot.forEach(function(childSnapshot){
+            if (childSnapshot.val().UID == firebase.auth().currentUser.uid) {
+                downloadProfiles = childSnapshot.val().downloadProfiles + 1;
+            }
+            });
+            })
+            let refe = firebase.database().ref('Users').child(firebase.auth().currentUser.uid).update({
+                    downloadProfiles: downloadProfiles,
+                });
+            let ref2 = firebase.database().ref('Users').child(firebase.auth().currentUser.uid).child('profilesDownload').push();
+            ref2.set({
                 name: user.name.first,
                 lastname: user.name.last,
                 gender: user.gender,

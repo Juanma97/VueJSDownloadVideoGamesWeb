@@ -18,7 +18,7 @@
             </v-layout>
         </v-container>
         </v-content>
-        <v-progress-circular v-if="register" class="progress" size="64" indeterminate=true></v-progress-circular>
+        <v-progress-circular v-if="register" class="progress" size="64" indeterminate></v-progress-circular>
     </div>
 </template>
 
