@@ -19,14 +19,14 @@ database.signUp = async (email, password, name) => {
     await firebase.auth().createUserWithEmailAndPassword(email, password);
     const UID = firebase.auth().currentUser.uid;
     firebase.auth().currentUser.displayName = name;
-    let ref = firebase.database().ref('Users').child(UID).set({
+    firebase.database().ref('Users').child(UID).set({
       name: name,
       logins: 0,
       downloadProfiles: 0,
       profilesDownload: 'none',
       UID: UID,
     });
-    store.commit('setCurrentUser', firebase.auth().currentUser);
+    store.commit('setCurrentUser', firebase.auth().currentUser, true);
     return true;
   } catch (error) {
     return error;
@@ -52,7 +52,7 @@ database.signIn = async (email, password) => {
     let refLoginsUpdate = firebase.database().ref('Users').child(firebase.auth().currentUser.uid).update({
       logins: login,
     });
-    store.commit('setCurrentUser', firebase.auth().currentUser);
+    store.commit('setCurrentUser', firebase.auth().currentUser, true);
     return true;
   } catch (error) {
     return error;
@@ -62,7 +62,7 @@ database.signIn = async (email, password) => {
 database.signOut = async () => {
   try {
     await firebase.auth().signOut();
-    store.commit('setCurrentUser', null);
+    store.commit('setCurrentUser', null, false);
     return true;
   } catch (error) {
     return error;

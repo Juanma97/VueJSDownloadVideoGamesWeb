@@ -8,7 +8,7 @@
         <v-card-text>{{ user.gender }}</v-card-text>
         <v-card-actions>
             <v-layout justify-center>
-                <v-btn class="button-download" color="primary" @click="downloadProfile(user)">Download profile!</v-btn>
+                <v-btn  class="button-download" color="primary" @click="downloadProfile(user)">Download profile!</v-btn>
             </v-layout>
         </v-card-actions>
     </v-card>
@@ -28,34 +28,48 @@ export default {
         };
     },
     async created(){
-    axios.get("https://randomuser.me/api/?results=100", {
-    })
-    .then(response => {
-        this.users = response.data.results;
-        this.data = true;
-        this.$emit('person-card:change', this.data);
-        
-    })
-  .catch(e => {
-    console.log("error", e);
-  });
+        axios.get("https://randomuser.me/api/?results=100", {})
+        .then(response => {
+            this.users = response.data.results;
+            this.data = true;
+            this.$emit('person-card:change', this.data);
+        })
+        .catch(e => {
+            console.log("error", e);
+        });
     },
     methods: {
-        downloadProfile(user) {
-            let downloadProfiles;
-            const ref = firebase.database().ref('Users');
-            ref.on('value', function(snapshot) {
-            snapshot.forEach(function(childSnapshot){
-            if (childSnapshot.val().UID == firebase.auth().currentUser.uid) {
-                downloadProfiles = childSnapshot.val().downloadProfiles + 1;
-            }
+        getDownloadProfiles() {
+            let profilesNumber;
+            firebase.database()
+            .ref('Users/' + firebase.auth().currentUser.uid)
+            .child('downloadProfiles')
+            .on('value', (snapshot) => {
+                profilesNumber = snapshot.val()
             });
-            })
-            let refe = firebase.database().ref('Users').child(firebase.auth().currentUser.uid).update({
-                    downloadProfiles: downloadProfiles,
-                });
-            let ref2 = firebase.database().ref('Users').child(firebase.auth().currentUser.uid).child('profilesDownload').push();
-            ref2.set({
+            return profilesNumber;
+        },
+        downloadProfile(user) {
+            if(this.currentUser){
+                this.updateProfile(this.getDownloadProfiles());
+                this.setNewProfileDownload(user);
+            }else{
+                alert("Debes loguearte para poder descargar");
+            }
+            
+        },
+        updateProfile(downloadProfiles) {
+            firebase.database().ref('Users')
+            .child(firebase.auth().currentUser.uid)
+            .update({
+                downloadProfiles: downloadProfiles,
+            });
+        },
+        setNewProfileDownload(user) {
+            firebase.database().ref('Users')
+            .child(firebase.auth().currentUser.uid)
+            .child('profilesDownload')
+            .push().set({
                 name: user.name.first,
                 lastname: user.name.last,
                 gender: user.gender,
@@ -66,10 +80,15 @@ export default {
                 longitude: user.location.coordinates.longitude,
                 img: user.picture.large,
                 phone: user.phone,
-
             });
         }
-    }
+    },
+    computed: {
+    currentUser() {
+        console.log(this.$store.state.currentUser)
+      return this.$store.state.currentUser;
+    },
+  }
 }
 </script>
 

@@ -6,6 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     currentUser: null,
+    isLogin: false,
     name: '',
     logins: 0,
     downloadProfiles: 0,
@@ -13,9 +14,10 @@ export default new Vuex.Store({
   },
   mutations: {
 
-    setCurrentUser(state, payload) {
-    // eslint-disable-next-line
+    setCurrentUser(state, payload, isLogin) {
+    /* eslint-disable */
       state.currentUser = payload;
+      state.isLogin = isLogin;
     },
     setCurrentName(state, payload) {
       state.name = payload;

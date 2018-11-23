@@ -3,7 +3,7 @@ import Router from 'vue-router';
 import HomePage from '@/components/HomePage.vue';
 import LoginComponent from '@/components/LoginComponent.vue';
 import RegisterComponent from '@/components/RegisterComponent.vue';
-import ProfilePage from '@/components/ProfilePage.vue';
+import ProfilePage from '@/components/profile/ProfilePage.vue';
 
 Vue.use(Router);
 
