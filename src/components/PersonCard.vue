@@ -18,6 +18,7 @@
 <script>
 import axios from 'axios';
 import firebase from 'firebase';
+import * as jsPDF from 'jspdf';
 
 export default {
     name: 'PersonCard',
@@ -39,6 +40,22 @@ export default {
         });
     },
     methods: {
+        createPDF(user) {
+            let pdfName = user.name.first + '_data';
+            var doc = new jsPDF();
+            doc.text("Nombre: " + user.name.first, 10, 10);
+            doc.text("Apellidos: " + user.name.last, 10, 20);
+            doc.text("Género: " + user.gender, 10, 30);
+            doc.text("Email: " + user.email, 10, 40);
+            doc.text("Localización: ", 10, 50);
+            doc.text("Calle: " + user.location.street, 20, 60);
+            doc.text("Ciudad: " + user.location.city, 20, 70);
+            doc.text("Coordenadas: ", 30, 80);
+            doc.text("Latitud: " + user.location.coordinates.latitude, 30, 90);
+            doc.text("Longitud: " + user.location.coordinates.longitude, 30, 100);
+            doc.text("Telefono: " + user.phone, 10, 110);
+            doc.save(pdfName + '.pdf');
+        },
         getDownloadProfiles() {
             let profilesNumber;
             firebase.database()
@@ -47,10 +64,11 @@ export default {
             .on('value', (snapshot) => {
                 profilesNumber = snapshot.val()
             });
-            return profilesNumber;
+            return profilesNumber + 1;
         },
         downloadProfile(user) {
             if(this.currentUser){
+                this.createPDF(user);
                 this.updateProfile(this.getDownloadProfiles());
                 this.setNewProfileDownload(user);
             }else{

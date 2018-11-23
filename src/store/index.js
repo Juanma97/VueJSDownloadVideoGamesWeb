@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Vue from 'vue';
 import Vuex from 'vuex';
 
@@ -13,9 +14,7 @@ export default new Vuex.Store({
     profiles: [],
   },
   mutations: {
-
     setCurrentUser(state, payload, isLogin) {
-    /* eslint-disable */
       state.currentUser = payload;
       state.isLogin = isLogin;
     },
